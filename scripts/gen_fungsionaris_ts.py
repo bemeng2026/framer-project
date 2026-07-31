@@ -45,11 +45,17 @@ HEADER = '''/* =================================================================
    Jangan diedit manual — perbarui sumber Excel-nya lalu generate ulang,
    supaya tidak ada nama yang salah ketik.
 
-   HANYA memuat tiga kolom: nama, jurusan, angkatan.
+   HANYA memuat nama, jurusan, angkatan, dan kode departemen.
 
    Kolom sensitif di workbook sumber (NPM, tempat & tanggal lahir, nomor HP,
    ID Line, email, alamat rumah) SENGAJA TIDAK DISERTAKAN dan tidak boleh
    ditambahkan ke file ini — file ini ikut ter-publish ke website.
+
+   `label` adalah teks baris kedua di kartu, format "DTI'25".
+   Pemetaan departemen: DTS (Sipil, Lingkungan), DTM (Mesin, Perkapalan),
+   DTE (Elektro, Biomedik, Komputer), DTK (Kimia, Bioproses),
+   DA (Arsitektur, Arsitektur Interior), DTMM, DTI, dan PI untuk seluruh
+   mahasiswa KKI.
 
    Cakupan: 295 orang di 16 bidang. Ketua & Wakil Ketua Lembaga, 7 Koordinator
    Koridor, dan 10 anggota SC tidak termasuk karena bukan jabatan level bidang.
@@ -59,6 +65,9 @@ export type Orang = {
     nama: string
     jurusan: string
     angkatan: string
+    dept: string
+    /** Teks baris kedua di kartu, mis. "DTI'25". */
+    label: string
 }
 
 export type Fungsionaris = {
@@ -85,7 +94,9 @@ def blok(daftar, indent):
     baris = [
         f'{sp}    {{ nama: "{esc(o["nama"])}", '
         f'jurusan: "{esc(o["jurusan"])}", '
-        f'angkatan: "{esc(o["angkatan"])}" }},'
+        f'angkatan: "{esc(o["angkatan"])}", '
+        f'dept: "{esc(o["dept"])}", '
+        f'label: "{esc(o["label"])}" }},'
         for o in daftar
     ]
     return "[\n" + "\n".join(baris) + f"\n{sp}]"
