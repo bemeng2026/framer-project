@@ -104,9 +104,9 @@ Sumber: `KoridorIntro.tsx` (Kresma & Kominfo), tabel status di
 
 ---
 
-## 4. Catatan teknis: override scroll belum scalable
+## 4. Override scroll — sudah dikerjakan
 
-Pola yang ada sekarang mengunci satu section per pasang file:
+Pola lama mengunci satu section per pasang file:
 
 ```
 Interactive_Button_Folder/Id_tc.tsx     → id="teknik-cup-section"
@@ -115,9 +115,42 @@ Interactive_Button_Folder/Id_tektuk.tsx    → (section lain)
 Interactive_Button_Folder/Click_tektuk.tsx → (section lain)
 ```
 
-Untuk 18 bidang pola ini butuh 36 file override. Usulan: satu pasang override
-generik yang menerima id lewat property control, jadi cukup 2 file untuk semua
-bidang. Belum dikerjakan — menunggu persetujuan.
+Untuk 18 bidang pola itu butuh 36 file. Diganti dengan satu file:
+**`BidangAnchor.tsx`** (di Framer; salinan di `framer-code/BidangAnchor.tsx`),
+berisi 22 override — sepasang per bidang. File lama sengaja tidak dihapus
+supaya halaman yang sudah memakainya tidak rusak.
+
+Cara pakai di Framer:
+
+| Pasang di | Override | Efek |
+| --- | --- | --- |
+| Section bidang | `withId<Nama>` | Menempelkan `id="bidang-<slug>"` |
+| Video / tombol di intro | `withScroll<Nama>` | Klik → scroll halus ke section itu |
+
+Contoh untuk Kominfo: section Media → `withIdMedia`; video Media di intro →
+`withScrollMedia`.
+
+Perilaku yang sudah ditangani:
+
+- **Offset navbar** — section memakai `scroll-margin-top` fluid
+  (`clamp(72px, 9vw, 112px)`), bisa ditimpa lewat CSS var `--bem-nav-offset`.
+  Tanpa ini judul bidang tertutup navbar sticky.
+- **Fokus keyboard** — setelah scroll, fokus dipindah ke section
+  (`tabIndex={-1}` + `focus({ preventScroll: true })`), jadi pengguna keyboard
+  dan screen reader ikut berpindah, bukan cuma tampilannya.
+- **prefers-reduced-motion** — scroll jadi `auto` (tanpa animasi) bila aktif.
+- **Bidang belum ada** — kalau section tujuan belum dibuat, klik didiamkan,
+  tidak melempar error.
+- **URL ikut ter-update** ke `#bidang-<slug>` lewat `history.replaceState`,
+  jadi bisa di-share dan konsisten dengan link navbar.
+
+Catatan implementasi: Framer hanya mengenali override dari **function
+declaration** yang namanya diawali `with`. Versi pertama memakai
+`export const … = factory(...)` dan tidak terdeteksi sama sekali
+(`exports: []`) — pola itu jangan diulang.
+
+Untuk Finance & Adkesma, tambahkan sepasang fungsi per bidang di file yang
+sama begitu nama bidangnya diketahui — tidak perlu file baru.
 
 ---
 
