@@ -8,6 +8,10 @@
    1. Salin blok `relasi` di bawah, ganti key + isinya.
    2. Buka halaman bidang di Framer, pilih instance BidangProfilePage,
       lalu pilih slug-nya dari dropdown "Bidang" di panel properti.
+
+   Nama orang JANGAN diketik manual — sumbernya Badan_Pengurusstaff_BEMFTUI.xlsx,
+   dan blok `anggota` dihasilkan lewat scripts/ di repo framer-project supaya
+   tidak ada nama yang salah ketik.
    ========================================================================== */
 
 export type Anggota = { nama: string; jabatan: string; foto: string }
@@ -184,7 +188,10 @@ export const BIDANG: Record<string, Bidang> = {
     },
 
     /* ======================================================================
-       TEMPLATE KOSONG — salin blok ini untuk tiap bidang baru
+       RELASI — bidang kedua koridor Kominfo.
+       Nama dari Badan_Pengurusstaff_BEMFTUI.xlsx, teks dari
+       pengertian_deskripsi_seluruh_bidang_dan_prokernya.txt.
+       Pakai blok ini sebagai acuan bentuk untuk 14 bidang berikutnya.
        ====================================================================== */
     relasi: {
         slug: "relasi",
