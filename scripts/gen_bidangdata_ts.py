@@ -61,11 +61,9 @@ KORIDOR = {
     "ristek": "Kresma", "seni": "Kresma", "depor": "Kresma",
 }
 
-PERAN = {
-    "kepala": "Kepala Bidang",
-    "wakil": "Wakil Kepala Bidang",
-    "sa": "Staf Ahli",
-}
+# Baris kedua kartu hanya berisi "DTI'25" — tanpa awalan jabatan. Urutan
+# anggota sudah menempatkan Kepala, Wakil, lalu Staf Ahli di depan, jadi
+# jabatan tetap terbaca dari posisinya.
 
 # Kekosongan yang sudah dilaporkan dan diputuskan dibiarkan.
 CATATAN = {
@@ -143,8 +141,9 @@ function avatar(nama: string): string {
     return "data:image/svg+xml;utf8," + encodeURIComponent(svg)
 }
 
-/* Satu anggota. `jabatan` adalah baris kedua kartu: "DTI'25" untuk Badan
-   Pengurus, dan "Kepala Bidang · DTI'24" untuk BPH & Staf Ahli. */
+/* Satu anggota. `jabatan` adalah baris kedua kartu, isinya kode departemen
+   dan angkatan saja: "DTI'25". Tanpa awalan jabatan — urutan daftar sudah
+   menempatkan Kepala, Wakil, lalu Staf Ahli di depan. */
 function orang(nama: string, jabatan: string): Anggota {
     return { nama, jabatan, foto: avatar(nama) }
 }
@@ -301,12 +300,9 @@ def blok_bidang(slug, fung, kont):
     baris.append("        heroFoto: [],")
     baris.append(f"        /* {jml} orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */")
     baris.append("        anggota: [")
-    for kunci in ("kepala", "wakil", "sa"):
+    for kunci in ("kepala", "wakil", "sa", "bp"):
         for o in f[kunci]:
-            jab = f"{PERAN[kunci]} · {o['label']}"
-            baris.append(f'            orang("{esc(o["nama"])}", "{esc(jab)}"),')
-    for o in f["bp"]:
-        baris.append(f'            orang("{esc(o["nama"])}", "{esc(o["label"])}"),')
+            baris.append(f'            orang("{esc(o["nama"])}", "{esc(o["label"])}"),')
     baris.append("        ],")
     baris.append("        // TODO: foto galeri belum tersedia — dipasang manual.")
     baris.append("        galeri: [],")

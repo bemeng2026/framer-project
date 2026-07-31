@@ -68,8 +68,9 @@ function avatar(nama: string): string {
     return "data:image/svg+xml;utf8," + encodeURIComponent(svg)
 }
 
-/* Satu anggota. `jabatan` adalah baris kedua kartu: "DTI'25" untuk Badan
-   Pengurus, dan "Kepala Bidang · DTI'24" untuk BPH & Staf Ahli. */
+/* Satu anggota. `jabatan` adalah baris kedua kartu, isinya kode departemen
+   dan angkatan saja: "DTI'25". Tanpa awalan jabatan — urutan daftar sudah
+   menempatkan Kepala, Wakil, lalu Staf Ahli di depan. */
 function orang(nama: string, jabatan: string): Anggota {
     return { nama, jabatan, foto: avatar(nama) }
 }
@@ -94,11 +95,11 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 13 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Hasan Fahmi Abdurrahman", "Kepala Bidang · DTI'24"),
-            orang("Nahla Raisya Herlambang", "Wakil Kepala Bidang · DTM'24"),
-            orang("Sam Pramudana Musa Sasongko", "Wakil Kepala Bidang · DTM'24"),
-            orang("Fazza Nurrizqy", "Staf Ahli · DTI'24"),
-            orang("Puti Nazzura Lutfia", "Staf Ahli · DTI'24"),
+            orang("Hasan Fahmi Abdurrahman", "DTI'24"),
+            orang("Nahla Raisya Herlambang", "DTM'24"),
+            orang("Sam Pramudana Musa Sasongko", "DTM'24"),
+            orang("Fazza Nurrizqy", "DTI'24"),
+            orang("Puti Nazzura Lutfia", "DTI'24"),
             orang("Aditya Bagus Nugroho", "PI'25"),
             orang("Agnina Amaliah Safitri", "DTMM'25"),
             orang("Ainindira Gendis Setiawan", "DTMM'25"),
@@ -151,9 +152,9 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 18 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Azwa Syafira Dayana Nasution", "Kepala Bidang · DTE'24"),
-            orang("Raihan Fadhail Ilah", "Wakil Kepala Bidang · PI'24"),
-            orang("Azkia Raifa Yurizka", "Wakil Kepala Bidang · DTI'24"),
+            orang("Azwa Syafira Dayana Nasution", "DTE'24"),
+            orang("Raihan Fadhail Ilah", "PI'24"),
+            orang("Azkia Raifa Yurizka", "DTI'24"),
             orang("Ahmad Fairus Baraya", "DTE'25"),
             orang("Aisha Nadira Iswadi", "DTI'25"),
             orang("Annisah Alra Rahma", "DTS'25"),
@@ -213,10 +214,10 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 18 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Firoos Ghazali", "Kepala Bidang · DTI'24"),
-            orang("Jenny Evellyn", "Wakil Kepala Bidang · DTI'24"),
-            orang("Fauzan Aprizal Ramzi", "Wakil Kepala Bidang · DTM'24"),
-            orang("Sarah Syahidah Pamuntjak", "Staf Ahli · DTS'24"),
+            orang("Firoos Ghazali", "DTI'24"),
+            orang("Jenny Evellyn", "DTI'24"),
+            orang("Fauzan Aprizal Ramzi", "DTM'24"),
+            orang("Sarah Syahidah Pamuntjak", "DTS'24"),
             orang("Akmal Faiq Muhammad Ranyan", "DTE'25"),
             orang("Aryo Mukti Anugerah", "DTS'25"),
             orang("Aurheva Divinia Zuhayr", "DTI'25"),
@@ -281,11 +282,11 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 19 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Zachary Arkyn Rusli", "Kepala Bidang · DTE'24"),
-            orang("Muhammad Faris Akbar", "Wakil Kepala Bidang · DTMM'24"),
-            orang("Sadethy Rofifah Syadila", "Wakil Kepala Bidang · DTI'24"),
-            orang("Rafael Raditya Setyono", "Staf Ahli · DTE'24"),
-            orang("Sherlyanda Arsilia", "Staf Ahli · PI'24"),
+            orang("Zachary Arkyn Rusli", "DTE'24"),
+            orang("Muhammad Faris Akbar", "DTMM'24"),
+            orang("Sadethy Rofifah Syadila", "DTI'24"),
+            orang("Rafael Raditya Setyono", "DTE'24"),
+            orang("Sherlyanda Arsilia", "PI'24"),
             orang("Alivio Fadhil Rosyadi", "PI'25"),
             orang("Anabelle Franceline Laswardi", "DTI'25"),
             orang("Arkaan Rifqizuhair", "DTS'25"),
@@ -350,10 +351,10 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 16 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Theresia Meiliana Sianipar", "Kepala Bidang · DTI'24"),
-            orang("Ali Azwar", "Wakil Kepala Bidang · DTI'24"),
-            orang("Mirna Wati", "Wakil Kepala Bidang · DTMM'24"),
-            orang("Aisyah Rana Ghaziyah", "Staf Ahli · DTK'24"),
+            orang("Theresia Meiliana Sianipar", "DTI'24"),
+            orang("Ali Azwar", "DTI'24"),
+            orang("Mirna Wati", "DTMM'24"),
+            orang("Aisyah Rana Ghaziyah", "DTK'24"),
             orang("Adelia Rafif Faraysha", "DTI'25"),
             orang("Ahmad Faisa Bahy", "DTI'25"),
             orang("Andhika Razaan", "DTS'24"),
@@ -515,10 +516,10 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 16 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Khayra Zalfa Anindya", "Kepala Bidang · DTI'24"),
-            orang("Kahfi Surya Arrayyan", "Wakil Kepala Bidang · DTMM'24"),
-            orang("Tarisha Khairania Witjaksono", "Staf Ahli · PI'24"),
-            orang("Grace Ananda Josephine", "Staf Ahli · DTE'24"),
+            orang("Khayra Zalfa Anindya", "DTI'24"),
+            orang("Kahfi Surya Arrayyan", "DTMM'24"),
+            orang("Tarisha Khairania Witjaksono", "PI'24"),
+            orang("Grace Ananda Josephine", "DTE'24"),
             orang("Aisy Nabil Khailiyah Permadi", "DTMM'25"),
             orang("Aiwis Dewi Rambing", "DTI'25"),
             orang("Athiya Hernanda", "PI'25"),
@@ -593,10 +594,10 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 14 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Putri Nabilla Hasan", "Kepala Bidang · DTMM'23"),
-            orang("Khalisa Zahra Maulana", "Wakil Kepala Bidang · DTE'24"),
-            orang("Aisyah Layyina Zukhrufa", "Wakil Kepala Bidang · DA'24"),
-            orang("Jeanne Yolanda Catheryne Ambarita", "Staf Ahli · DTI'24"),
+            orang("Putri Nabilla Hasan", "DTMM'23"),
+            orang("Khalisa Zahra Maulana", "DTE'24"),
+            orang("Aisyah Layyina Zukhrufa", "DA'24"),
+            orang("Jeanne Yolanda Catheryne Ambarita", "DTI'24"),
             orang("Ahla Shofwa Ratu", "DTK'25"),
             orang("Aldrin Fathur Rasya", "DTMM'25"),
             orang("Aliyyah Husna Hafiz", "DTE'25"),
@@ -657,10 +658,10 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 14 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Yemima Carrisa Kinanthi", "Kepala Bidang · DTE'23"),
-            orang("Muhammad Dandy Radityo", "Wakil Kepala Bidang · DTI'24"),
-            orang("Alya Putri Ramadani", "Wakil Kepala Bidang · DTS'24"),
-            orang("Almas Azzahra", "Staf Ahli · DTI'24"),
+            orang("Yemima Carrisa Kinanthi", "DTE'23"),
+            orang("Muhammad Dandy Radityo", "DTI'24"),
+            orang("Alya Putri Ramadani", "DTS'24"),
+            orang("Almas Azzahra", "DTI'24"),
             orang("Aliyya Raida Fauzan", "DA'25"),
             orang("Aurelia Zahra Putri Nadisya", "DTM'25"),
             orang("Ayudiyah Rahsya Sasmita", "DTMM'25"),
@@ -727,13 +728,13 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 20 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Muhammad Luthfiansyah Abafiyah Putra", "Kepala Bidang · DTS'24"),
-            orang("Botista Rahelia Ishaq", "Wakil Kepala Bidang · DTS'24"),
-            orang("Halim Naufaldi Akmal", "Wakil Kepala Bidang · DTK'24"),
-            orang("Syifa Muna Hayati", "Staf Ahli · DTS'24"),
-            orang("Ahmad Fauzan Mubarok", "Staf Ahli · DTS'24"),
-            orang("Muhammad Akmal Rasyid Prapanca", "Staf Ahli · DTI'24"),
-            orang("Muhammad Nickravi Fawasyah", "Staf Ahli · PI'24"),
+            orang("Muhammad Luthfiansyah Abafiyah Putra", "DTS'24"),
+            orang("Botista Rahelia Ishaq", "DTS'24"),
+            orang("Halim Naufaldi Akmal", "DTK'24"),
+            orang("Syifa Muna Hayati", "DTS'24"),
+            orang("Ahmad Fauzan Mubarok", "DTS'24"),
+            orang("Muhammad Akmal Rasyid Prapanca", "DTI'24"),
+            orang("Muhammad Nickravi Fawasyah", "PI'24"),
             orang("Adra Keira Arto", "DTI'25"),
             orang("Ailsya Nur Aliya", "DTS'25"),
             orang("Andhika Raditya Mahardika", "DTS'25"),
@@ -773,13 +774,13 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 23 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Kenzie Ananda Rico", "Kepala Bidang · PI'23"),
-            orang("Grace Kezia Siregar", "Wakil Kepala Bidang · DTE'23"),
-            orang("Adinda Aisya Selvira", "Wakil Kepala Bidang · DTMM'23"),
-            orang("Nafis Atha", "Staf Ahli · PI'24"),
-            orang("Sausan Naila Althaf", "Staf Ahli · DTS'24"),
-            orang("Khinant Najmahani", "Staf Ahli · DTMM'24"),
-            orang("Raden Muhammad Kiflan", "Staf Ahli · DTMM'24"),
+            orang("Kenzie Ananda Rico", "PI'23"),
+            orang("Grace Kezia Siregar", "DTE'23"),
+            orang("Adinda Aisya Selvira", "DTMM'23"),
+            orang("Nafis Atha", "PI'24"),
+            orang("Sausan Naila Althaf", "DTS'24"),
+            orang("Khinant Najmahani", "DTMM'24"),
+            orang("Raden Muhammad Kiflan", "DTMM'24"),
             orang("Aesyah Aslamiyah Siregar", "DTMM'25"),
             orang("Aiko Salma Putrajaya", "DTE'25"),
             orang("Akmal Ali Ibrahim", "DTS'25"),
@@ -840,12 +841,12 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 18 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Nadira Rahma Alisa", "Kepala Bidang · DTI'24"),
-            orang("Claudia Leovania", "Wakil Kepala Bidang · DTMM'24"),
-            orang("Fathiaa Arundhati Qaisra", "Wakil Kepala Bidang · DTS'24"),
-            orang("Nurhakim Sastra Nugraha", "Staf Ahli · DTI'24"),
-            orang("Shafa Audya", "Staf Ahli · PI'24"),
-            orang("Muhammad Riza Novrianto", "Staf Ahli · DTMM'24"),
+            orang("Nadira Rahma Alisa", "DTI'24"),
+            orang("Claudia Leovania", "DTMM'24"),
+            orang("Fathiaa Arundhati Qaisra", "DTS'24"),
+            orang("Nurhakim Sastra Nugraha", "DTI'24"),
+            orang("Shafa Audya", "PI'24"),
+            orang("Muhammad Riza Novrianto", "DTMM'24"),
             orang("Ammar Adyan Syarif", "DTMM'25"),
             orang("Andi Najwa Farisah Putri", "DTS'25"),
             orang("Aulia Nurrohmania El Faiza", "PI'25"),
@@ -902,12 +903,12 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 20 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Muhammad Arya Pratama", "Kepala Bidang · DA'24"),
-            orang("Hilwah Azzahrah", "Wakil Kepala Bidang · DTI'24"),
-            orang("Muhamad Satrio Nurcahyo", "Wakil Kepala Bidang · DTMM'24"),
-            orang("Muhammad Ichwan Kamil", "Staf Ahli · DTE'24"),
-            orang("Rasya Rizky Dwinanda", "Staf Ahli · DTI'24"),
-            orang("Vania Poetri Dewanto", "Staf Ahli · DTI'24"),
+            orang("Muhammad Arya Pratama", "DA'24"),
+            orang("Hilwah Azzahrah", "DTI'24"),
+            orang("Muhamad Satrio Nurcahyo", "DTMM'24"),
+            orang("Muhammad Ichwan Kamil", "DTE'24"),
+            orang("Rasya Rizky Dwinanda", "DTI'24"),
+            orang("Vania Poetri Dewanto", "DTI'24"),
             orang("Arhabi Nabil Andian", "PI'25"),
             orang("Arvel Navarro Arsatya", "DTS'25"),
             orang("Aurelia Amanda Kirana Putri", "DA'25"),
@@ -966,13 +967,13 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 24 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Nugroho Ulil Abshar", "Kepala Bidang · DTE'23"),
-            orang("Vanya Beatrice Siahaan", "Wakil Kepala Bidang · PI'24"),
-            orang("Alina Ransi Jamiputri", "Wakil Kepala Bidang · DTE'24"),
-            orang("Rahman Hakim", "Staf Ahli · DTI'24"),
-            orang("Aliefa Diadiva", "Staf Ahli · DA'24"),
-            orang("Laurence Sheila Artha Silitonga", "Staf Ahli · DTE'24"),
-            orang("Muhammad Gavino Rafie Fahlefi", "Staf Ahli · PI'24"),
+            orang("Nugroho Ulil Abshar", "DTE'23"),
+            orang("Vanya Beatrice Siahaan", "PI'24"),
+            orang("Alina Ransi Jamiputri", "DTE'24"),
+            orang("Rahman Hakim", "DTI'24"),
+            orang("Aliefa Diadiva", "DA'24"),
+            orang("Laurence Sheila Artha Silitonga", "DTE'24"),
+            orang("Muhammad Gavino Rafie Fahlefi", "PI'24"),
             orang("Arsyil Putra Herlambang", "DTM'25"),
             orang("Carlos Ricardo Dwi Syaputra", "DTE'25"),
             orang("Edelweiss Damara Araminta", "DTS'25"),
@@ -1040,12 +1041,12 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 22 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Ravellino Rafsanjani Amino", "Kepala Bidang · DTE'23"),
-            orang("Rosha Febri Mahsera", "Wakil Kepala Bidang · DTE'24"),
-            orang("Gala Fadhlin Adika", "Wakil Kepala Bidang · DTS'24"),
-            orang("Razka Syahputera Prasetyo", "Staf Ahli · PI'24"),
-            orang("Zahra Aliyah Soedharmono", "Staf Ahli · DTM'24"),
-            orang("Respati Shandiya Abdullah", "Staf Ahli · DTMM'24"),
+            orang("Ravellino Rafsanjani Amino", "DTE'23"),
+            orang("Rosha Febri Mahsera", "DTE'24"),
+            orang("Gala Fadhlin Adika", "DTS'24"),
+            orang("Razka Syahputera Prasetyo", "PI'24"),
+            orang("Zahra Aliyah Soedharmono", "DTM'24"),
+            orang("Respati Shandiya Abdullah", "DTMM'24"),
             orang("Benedicto Aurelio Sereno", "DTE'25"),
             orang("Cerdas Izzati Triviar", "DTE'25"),
             orang("Daffa Abdillah Prapanca", "DTM'25"),
@@ -1112,11 +1113,11 @@ export const BIDANG: Record<string, Bidang> = {
         heroFoto: [],
         /* 23 orang dari Badan_Pengurusstaff_BEMFTUI.xlsx. */
         anggota: [
-            orang("Natasha Sabaa Syatha", "Kepala Bidang · DTK'23"),
-            orang("Ilhan Rafidya Khalid", "Wakil Kepala Bidang · DTE'23"),
-            orang("Ananda Nelsafya", "Wakil Kepala Bidang · PI'24"),
-            orang("Sheva Nadzirah", "Staf Ahli · DTK'24"),
-            orang("Taqy Muhammad Hisyam", "Staf Ahli · DTM'24"),
+            orang("Natasha Sabaa Syatha", "DTK'23"),
+            orang("Ilhan Rafidya Khalid", "DTE'23"),
+            orang("Ananda Nelsafya", "PI'24"),
+            orang("Sheva Nadzirah", "DTK'24"),
+            orang("Taqy Muhammad Hisyam", "DTM'24"),
             orang("Adinda Nashita Azzahra", "PI'25"),
             orang("Arfan Ghani Santoso", "DTI'25"),
             orang("Athalla Rafan Akbar Siregar", "DTI'25"),
