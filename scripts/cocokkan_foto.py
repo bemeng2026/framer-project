@@ -28,7 +28,12 @@ DERAU = {
     "dte", "dtm", "dtk", "dti", "dtmm", "dts", "dtsl", "da", "pi",
     # penanda jabatan
     "badan", "pengurus", "kepala", "wakil", "bidang", "staf", "staff", "ahli",
-    "bp", "bph", "sa", "koorbid", "koordinator",
+    "bp", "bph", "sa", "koorbid", "koordinator", "kabid", "wakabid",
+    # nama bidang — sering ditempel di belakang, mis. "..._BP AKPRO"
+    "akpro", "kesma", "relasi", "media", "hr", "rnd", "kestari", "wirus",
+    "kebendaharaan", "kebend", "kastrat", "kema", "lh", "sosmas", "ristek",
+    "seni", "depor", "kominfo", "adkesma", "sospol", "sosling", "kresma",
+    "internal", "finance", "bem", "ftui", "ikm",
     # lain-lain
     "salinan", "foto", "copy", "final", "fix", "edited", "raw", "ver",
     "kesekretariatan", "research", "and", "development",
