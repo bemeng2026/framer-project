@@ -45,6 +45,27 @@ WAJIB = set(SLUG.values())
 # benar, jadi tidak perlu dilaporkan sebagai salah tempel.
 KEMBAR_DISENGAJA = {("depor", "hr")}
 
+# Koreksi teks sumber yang sudah dikonfirmasi ke pemilik project. Ditulis di
+# sini supaya perubahannya terlihat dan bisa ditelusuri, bukan diam-diam.
+# Deskripsi HR & Depor menyebut kepengurusan 2025, padahal ini 2026.
+KOREKSI = [
+    ("BEM FTUI 2025", "BEM FTUI 2026"),
+]
+
+# Kekosongan yang sudah dilaporkan dan diputuskan dibiarkan. Tetap dicetak
+# sebagai catatan, tapi tidak lagi membuat script gagal — supaya kegagalan
+# script tetap berarti "ada masalah baru".
+DITERIMA = {
+    ("kestari", "deskripsi"),
+    ("kastrat", "proker"),
+}
+
+
+def koreksi(teks):
+    for lama, baru in KOREKSI:
+        teks = teks.replace(lama, baru)
+    return teks
+
 
 def kelompok(teks):
     """Pecah teks jadi kelompok baris yang dipisah baris kosong."""
@@ -85,7 +106,7 @@ def main():
                     "slug": slug,
                     "koridor": koridor_kini,
                     "namaSumber": nama,
-                    "deskripsi": " ".join(grup[1:]).strip(),
+                    "deskripsi": koreksi(" ".join(grup[1:]).strip()),
                     "proker": [],
                 }
                 continue
@@ -95,13 +116,13 @@ def main():
             sisa = grup[1:]
             if sisa and slug_kini:  # judul proker pertama menempel di header
                 hasil[slug_kini]["proker"].append(
-                    {"judul": sisa[0], "penjelasan": " ".join(sisa[1:]).strip()}
+                    {"judul": sisa[0], "penjelasan": koreksi(" ".join(sisa[1:]).strip())}
                 )
             continue
 
         if mode_proker and slug_kini:
             hasil[slug_kini]["proker"].append(
-                {"judul": kepala, "penjelasan": " ".join(grup[1:]).strip()}
+                {"judul": kepala, "penjelasan": koreksi(" ".join(grup[1:]).strip())}
             )
 
     with open(OUT, "w", encoding="utf-8") as f:
@@ -110,6 +131,7 @@ def main():
     print(f"{len(hasil)} bidang terbaca\n")
     print(f"{'slug':<15} {'koridor':<10} {'deskripsi':>10} {'proker':>7}")
     masalah = []
+    diterima = []
     for slug in sorted(hasil):
         d = hasil[slug]
         pjg = len(d["deskripsi"])
@@ -118,9 +140,11 @@ def main():
             f"{(str(pjg) + ' char') if pjg else 'KOSONG':>10} {len(d['proker']):>7}"
         )
         if not pjg:
-            masalah.append(f"{slug}: deskripsi kosong")
+            pesan = f"{slug}: deskripsi kosong"
+            (diterima if (slug, "deskripsi") in DITERIMA else masalah).append(pesan)
         if not d["proker"]:
-            masalah.append(f"{slug}: tidak ada proker")
+            pesan = f"{slug}: tidak ada proker"
+            (diterima if (slug, "proker") in DITERIMA else masalah).append(pesan)
 
     hilang = WAJIB - set(hasil)
     for slug in sorted(hilang):
@@ -137,12 +161,17 @@ def main():
             masalah.append(f"deskripsi identik di {sorted(slugs)}: {desk[:60]}…")
 
     print()
+    if diterima:
+        print("KOSONG, SUDAH DIPUTUSKAN DIBIARKAN:")
+        for m in diterima:
+            print("  -", m)
+        print()
     if masalah:
-        print("PERLU DILENGKAPI DARI BIDANG TERKAIT:")
+        print("MASALAH BARU, PERLU DILENGKAPI DARI BIDANG TERKAIT:")
         for m in masalah:
             print("  -", m)
         sys.exit(1)
-    print("semua bidang lengkap")
+    print("tidak ada masalah baru")
 
 
 if __name__ == "__main__":

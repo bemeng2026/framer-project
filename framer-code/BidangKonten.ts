@@ -57,7 +57,7 @@ export const KONTEN: Record<string, Konten> = {
         slug: "hr",
         koridor: "Internal",
         deskripsi:
-            "Bidang yang bertujuan menjaga alur kaderisasi, menjaga internalisasi, dan mengevaluasi kinerja pengurus BEM FTUI 2025.",
+            "Bidang yang bertujuan menjaga alur kaderisasi, menjaga internalisasi, dan mengevaluasi kinerja pengurus BEM FTUI 2026.",
         proker: [
             {
                 judul: "Talent Control",
@@ -456,7 +456,7 @@ export const KONTEN: Record<string, Konten> = {
         slug: "depor",
         koridor: "Kresma",
         deskripsi:
-            "Bidang yang bertujuan menjaga alur kaderisasi, menjaga internalisasi, dan mengevaluasi kinerja pengurus BEM FTUI 2025.",
+            "Bidang yang bertujuan menjaga alur kaderisasi, menjaga internalisasi, dan mengevaluasi kinerja pengurus BEM FTUI 2026.",
         proker: [
             {
                 judul: "Latihan Rutin",

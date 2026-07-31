@@ -247,6 +247,7 @@ export const FUNGSIONARIS: Record<string, Fungsionaris> = {
             { nama: "Grace Ananda Josephine", jurusan: "Teknik Biomedik", angkatan: "2024", dept: "DTE", label: "DTE'24" },
         ],
         badanPengurus: [
+            { nama: "Aisy Nabil Khailiyah Permadi", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
             { nama: "Aiwis Dewi Rambing", jurusan: "Teknik Industri", angkatan: "2025", dept: "DTI", label: "DTI'25" },
             { nama: "Athiya Hernanda", jurusan: "Teknik Bioproses", angkatan: "2025", dept: "PI", label: "PI'25" },
             { nama: "Balqis Azzahra Rahmadani", jurusan: "Teknik Kimia", angkatan: "2025", dept: "DTK", label: "DTK'25" },
@@ -255,10 +256,9 @@ export const FUNGSIONARIS: Record<string, Fungsionaris> = {
             { nama: "I Made Adika Pranaja Mahardika", jurusan: "Teknik Lingkungan", angkatan: "2025", dept: "DTS", label: "DTS'25" },
             { nama: "Irvan Haydar", jurusan: "Teknik Biomedik", angkatan: "2025", dept: "DTE", label: "DTE'25" },
             { nama: "Moh. Ega Arizona Vata", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
-            { nama: "Muchammad osrizal aqila", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
+            { nama: "Muchammad Osrizal Aqila", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
             { nama: "Muhamad Rizky Farel", jurusan: "Teknik Industri", angkatan: "2025", dept: "DTI", label: "DTI'25" },
             { nama: "Zhaskia Alya Rahma Ghania", jurusan: "Teknik Lingkungan", angkatan: "2025", dept: "DTS", label: "DTS'25" },
-            { nama: "aisy nabil khailiyah permadi", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
         ],
     },
 
@@ -389,7 +389,7 @@ export const FUNGSIONARIS: Record<string, Fungsionaris> = {
             { nama: "Rafi Naufal", jurusan: "Arsitektur Interior", angkatan: "2025", dept: "DA", label: "DA'25" },
             { nama: "Rainanda Wiandari Salsabilla", jurusan: "Teknik Bioproses", angkatan: "2025", dept: "PI", label: "PI'25" },
             { nama: "Rasya Naira Ramadhani", jurusan: "Teknik Metalurgi dan Material", angkatan: "2025", dept: "DTMM", label: "DTMM'25" },
-            { nama: "Zufar bahaudin tamam", jurusan: "Arsitektur", angkatan: "2025", dept: "DA", label: "DA'25" },
+            { nama: "Zufar Bahaudin Tamam", jurusan: "Arsitektur", angkatan: "2025", dept: "DA", label: "DA'25" },
         ],
     },
 

@@ -84,6 +84,18 @@ def bersih(v):
     return re.sub(r"\s+", " ", s)
 
 
+def rapikan_nama(nama):
+    """Kapitalkan kata yang di sumber tertulis huruf kecil semua.
+
+    Hanya menyentuh kata yang SELURUHNYA huruf kecil dan murni alfabet, jadi
+    bentuk seperti "Al-Fatih", "Moh.", dan "M." tidak ikut berubah.
+    """
+    return " ".join(
+        w.capitalize() if w.isalpha() and w.islower() else w
+        for w in nama.split()
+    )
+
+
 def baku(jurusan):
     """-> (jurusan_baku, apakah_KKI). Menormalkan salah ketik & kapitalisasi."""
     s = jurusan.strip()
@@ -120,7 +132,7 @@ def main():
 
     for sheet in ("BPH", "Staf Ahli", "BP"):
         for row in wb[sheet].iter_rows(min_row=5, values_only=True):
-            nama = bersih(row[COL_NAMA])
+            nama = rapikan_nama(bersih(row[COL_NAMA]))
             if not nama:
                 continue
             peran, slug = klasifikasi(bersih(row[COL_JABATAN]))
