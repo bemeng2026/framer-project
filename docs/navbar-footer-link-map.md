@@ -86,21 +86,32 @@ Format: `#bidang-<slug>` — huruf kecil, tanpa spasi.
 
 | Koridor | Bidang | Anchor | URL lengkap |
 | --- | --- | --- | --- |
-| Kominfo | Media | `#bidang-media` | `/koridor-kominfo#bidang-media` |
-| Kominfo | Relasi | `#bidang-relasi` | `/koridor-kominfo#bidang-relasi` |
+| Internal | Kestari | `#bidang-kestari` | `/koridor-internal#bidang-kestari` |
 | Internal | HR | `#bidang-hr` | `/koridor-internal#bidang-hr` |
 | Internal | RnD | `#bidang-rnd` | `/koridor-internal#bidang-rnd` |
+| Finance | Wirus | `#bidang-wirus` | `/koridor-finance#bidang-wirus` |
+| Finance | Kebendaharaan | `#bidang-kebendaharaan` | `/koridor-finance#bidang-kebendaharaan` |
+| Kominfo | Media | `#bidang-media` | `/koridor-kominfo#bidang-media` |
+| Kominfo | Relasi | `#bidang-relasi` | `/koridor-kominfo#bidang-relasi` |
+| Adkesma | Akpro | `#bidang-akpro` | `/koridor-adkesma#bidang-akpro` |
+| Adkesma | Kesma | `#bidang-kesma` | `/koridor-adkesma#bidang-kesma` |
 | Sospol | Kastrat | `#bidang-kastrat` | `/koridor-sospol#bidang-kastrat` |
 | Sospol | Kema | `#bidang-kema` | `/koridor-sospol#bidang-kema` |
 | Sosling | LH | `#bidang-lh` | `/koridor-sosling#bidang-lh` |
-| Kresma | Depor | `#bidang-depor` | `/koridor-kresma#bidang-depor` |
-| Kresma | Seni | `#bidang-seni` | `/koridor-kresma#bidang-seni` |
+| Sosling | Sosmas | `#bidang-sosmas` | `/koridor-sosling#bidang-sosmas` |
 | Kresma | Ristek | `#bidang-ristek` | `/koridor-kresma#bidang-ristek` |
-| Finance | ? | — | <!-- TODO: daftar bidang belum diketahui --> |
-| Adkesma | ? | — | <!-- TODO: daftar bidang belum diketahui --> |
+| Kresma | Seni | `#bidang-seni` | `/koridor-kresma#bidang-seni` |
+| Kresma | Depor | `#bidang-depor` | `/koridor-kresma#bidang-depor` |
 
-Sumber: `KoridorIntro.tsx` (Kresma & Kominfo), tabel status di
-`1_INDUCTION_MIGRASI_WEBSITE_BEMFTUI.docx` §6 (Internal, Sospol, Sosling).
+Sumber: `Induction_BEM_FT_2026.docx` §3 (daftar lengkap 7 koridor + bidangnya).
+
+### Pengecualian struktur (jangan diperlakukan sebagai bug)
+
+| Bidang | Catatan |
+| --- | --- |
+| HR, RnD | Hanya sampai bagian Fungsionaris. **Tidak ada** Program Kerja & Kegiatan. |
+| Ristek, Depor | Belum ada konten sama sekali → placeholder rapi. |
+| Kominfo | Satu halaman tunggal: intro → Media → Relasi → Footer (sekali di bawah). |
 
 ---
 
@@ -156,14 +167,28 @@ sama begitu nama bidangnya diketahui — tidak perlu file baru.
 
 ## 5. Yang masih perlu keputusan
 
-1. **Isi submenu "Informasi Mahasiswa"** — belum terbaca dari komponen navbar.
-2. **Daftar bidang untuk Finance dan Adkesma** — belum ada di sumber mana pun
-   yang bisa diakses.
-3. **Nasib halaman per-bidang yang berdiri sendiri** (`/media`, `/relasi`,
-   `/hr`, `/rnd`, `/kestari`). Aturan §3 induction bilang section bidang harus
-   digabung ke halaman koridor, jadi URL terpisah ini kemungkinan perlu
-   di-redirect ke anchor-nya — misal `/relasi` → `/koridor-kominfo#bidang-relasi`.
-4. **`/program-unggulan`** — belum jelas masuk ke item navbar yang mana.
+1. **Isi submenu "Informasi Mahasiswa"** — belum terbaca dari komponen navbar,
+   dan tidak disebutkan di dokumen induction mana pun.
+2. **Nasib halaman per-bidang yang berdiri sendiri** (`/media`, `/relasi`,
+   `/hr`, `/rnd`, `/kestari`). Section bidang harus digabung ke halaman
+   koridor, jadi URL terpisah ini kemungkinan perlu di-redirect ke anchor-nya
+   — misal `/relasi` → `/koridor-kominfo#bidang-relasi`.
+3. **`/program-unggulan`** — halaman ini disebut di induction sebagai halaman
+   yang perlu dirapikan, tapi posisinya di struktur navbar belum ditentukan.
+
+## 5b. Dua dokumen induction saling berbeda
+
+| | `1_INDUCTION_MIGRASI_WEBSITE_BEMFTUI.docx` | `Induction_BEM_FT_2026.docx` |
+| --- | --- | --- |
+| Jumlah prompt | 0–11 | 0–16 |
+| Prompt 1 | Navbar & Footer | **Audit saja, tanpa perubahan** |
+| Urutan koridor | Internal dulu | **Kominfo dulu** (Prompt 6), sisanya 7–12 |
+| Daftar bidang | Tidak lengkap | Lengkap (dipakai di §3 dokumen ini) |
+| Rollback Framer | Tidak disebut | **Wajib sebelum mulai apa pun** |
+| Foto Badan Pengurus | Link Drive diberikan | Link harus diminta ke pemegangnya |
+
+Dokumen kedua tampak lebih baru dan lebih lengkap, tapi mana yang mengikat
+belum dikonfirmasi. Ini menentukan urutan kerja, jadi harus dipastikan dulu.
 
 ---
 
