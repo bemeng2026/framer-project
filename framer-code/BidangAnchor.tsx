@@ -6,7 +6,7 @@
    perubahannya terekam di git dan bisa direview lewat PR.
 
    Menggantikan pola lama (Id_tc.tsx / Click_tc.tsx, Id_tektuk.tsx / …) yang
-   mengunci satu section per pasang file. Untuk 18 bidang pola itu butuh 36
+   mengunci satu section per pasang file. Untuk 16 bidang pola itu butuh 32
    file; di sini cukup satu file — logikanya dipakai bareng lewat dua helper,
    tiap bidang hanya menambah dua fungsi tipis.
 
@@ -19,9 +19,13 @@
    navbar mendarat di section yang sama dengan tujuan klik video.
 
    Nama export wajib diawali `with` dan berupa function declaration — itu yang
-   dipakai Framer untuk mengenali sebuah export sebagai override.
+   dipakai Framer untuk mengenali sebuah export sebagai override. Pola
+   `export const … = factory(...)` TIDAK terdeteksi (exports kosong).
 
-   File lama tidak dihapus supaya halaman yang sudah memakainya tidak rusak.
+   Daftar bidang mengikuti Induction_BEM_FT_2026.docx §3.
+
+   File override lama tidak dihapus supaya halaman yang sudah memakainya
+   tidak rusak.
    ========================================================================== */
 
 import type { ComponentType, CSSProperties } from "react"
@@ -101,7 +105,51 @@ function pasangScroll(Component, anchor: string): ComponentType {
 }
 
 /* ========================================================================== */
-/* Koridor Kominfo                                                            */
+/* Koridor Internal — Kestari, HR, RnD                                        */
+/* HR & RnD hanya sampai bagian Fungsionaris: tidak ada Program Kerja maupun   */
+/* Kegiatan. Itu memang benar, bukan bug.                                     */
+/* ========================================================================== */
+export function withIdKestari(Component): ComponentType {
+    return pasangId(Component, "bidang-kestari")
+}
+export function withScrollKestari(Component): ComponentType {
+    return pasangScroll(Component, "bidang-kestari")
+}
+
+export function withIdHr(Component): ComponentType {
+    return pasangId(Component, "bidang-hr")
+}
+export function withScrollHr(Component): ComponentType {
+    return pasangScroll(Component, "bidang-hr")
+}
+
+export function withIdRnd(Component): ComponentType {
+    return pasangId(Component, "bidang-rnd")
+}
+export function withScrollRnd(Component): ComponentType {
+    return pasangScroll(Component, "bidang-rnd")
+}
+
+/* ========================================================================== */
+/* Koridor Finance — Wirus, Kebendaharaan                                     */
+/* ========================================================================== */
+export function withIdWirus(Component): ComponentType {
+    return pasangId(Component, "bidang-wirus")
+}
+export function withScrollWirus(Component): ComponentType {
+    return pasangScroll(Component, "bidang-wirus")
+}
+
+export function withIdKebendaharaan(Component): ComponentType {
+    return pasangId(Component, "bidang-kebendaharaan")
+}
+export function withScrollKebendaharaan(Component): ComponentType {
+    return pasangScroll(Component, "bidang-kebendaharaan")
+}
+
+/* ========================================================================== */
+/* Koridor Kominfo — Media, Relasi                                            */
+/* Satu halaman tunggal: intro → Media → Relasi → Footer sekali di bawah.      */
 /* ========================================================================== */
 export function withIdMedia(Component): ComponentType {
     return pasangId(Component, "bidang-media")
@@ -118,31 +166,24 @@ export function withScrollRelasi(Component): ComponentType {
 }
 
 /* ========================================================================== */
-/* Koridor Internal                                                           */
+/* Koridor Adkesma — Akpro, Kesma                                             */
 /* ========================================================================== */
-export function withIdHr(Component): ComponentType {
-    return pasangId(Component, "bidang-hr")
+export function withIdAkpro(Component): ComponentType {
+    return pasangId(Component, "bidang-akpro")
 }
-export function withScrollHr(Component): ComponentType {
-    return pasangScroll(Component, "bidang-hr")
-}
-
-export function withIdRnd(Component): ComponentType {
-    return pasangId(Component, "bidang-rnd")
-}
-export function withScrollRnd(Component): ComponentType {
-    return pasangScroll(Component, "bidang-rnd")
+export function withScrollAkpro(Component): ComponentType {
+    return pasangScroll(Component, "bidang-akpro")
 }
 
-export function withIdKestari(Component): ComponentType {
-    return pasangId(Component, "bidang-kestari")
+export function withIdKesma(Component): ComponentType {
+    return pasangId(Component, "bidang-kesma")
 }
-export function withScrollKestari(Component): ComponentType {
-    return pasangScroll(Component, "bidang-kestari")
+export function withScrollKesma(Component): ComponentType {
+    return pasangScroll(Component, "bidang-kesma")
 }
 
 /* ========================================================================== */
-/* Koridor Sospol                                                             */
+/* Koridor Sospol — Kastrat, Kema                                             */
 /* ========================================================================== */
 export function withIdKastrat(Component): ComponentType {
     return pasangId(Component, "bidang-kastrat")
@@ -159,7 +200,7 @@ export function withScrollKema(Component): ComponentType {
 }
 
 /* ========================================================================== */
-/* Koridor Sosling                                                            */
+/* Koridor Sosling — LH, Sosmas                                               */
 /* ========================================================================== */
 export function withIdLh(Component): ComponentType {
     return pasangId(Component, "bidang-lh")
@@ -168,14 +209,22 @@ export function withScrollLh(Component): ComponentType {
     return pasangScroll(Component, "bidang-lh")
 }
 
-/* ========================================================================== */
-/* Koridor Kresma                                                             */
-/* ========================================================================== */
-export function withIdDepor(Component): ComponentType {
-    return pasangId(Component, "bidang-depor")
+export function withIdSosmas(Component): ComponentType {
+    return pasangId(Component, "bidang-sosmas")
 }
-export function withScrollDepor(Component): ComponentType {
-    return pasangScroll(Component, "bidang-depor")
+export function withScrollSosmas(Component): ComponentType {
+    return pasangScroll(Component, "bidang-sosmas")
+}
+
+/* ========================================================================== */
+/* Koridor Kresma — Ristek, Seni, Depor                                       */
+/* Ristek & Depor belum ada kontennya sama sekali → section placeholder.       */
+/* ========================================================================== */
+export function withIdRistek(Component): ComponentType {
+    return pasangId(Component, "bidang-ristek")
+}
+export function withScrollRistek(Component): ComponentType {
+    return pasangScroll(Component, "bidang-ristek")
 }
 
 export function withIdSeni(Component): ComponentType {
@@ -185,16 +234,9 @@ export function withScrollSeni(Component): ComponentType {
     return pasangScroll(Component, "bidang-seni")
 }
 
-export function withIdRistek(Component): ComponentType {
-    return pasangId(Component, "bidang-ristek")
+export function withIdDepor(Component): ComponentType {
+    return pasangId(Component, "bidang-depor")
 }
-export function withScrollRistek(Component): ComponentType {
-    return pasangScroll(Component, "bidang-ristek")
+export function withScrollDepor(Component): ComponentType {
+    return pasangScroll(Component, "bidang-depor")
 }
-
-/* ========================================================================== */
-/* Koridor Finance & Adkesma                                                  */
-/* ========================================================================== */
-// TODO: daftar bidang untuk Finance dan Adkesma belum tersedia. Begitu
-// namanya diketahui, tambahkan sepasang fungsi per bidang mengikuti pola di
-// atas — tidak perlu file baru.
