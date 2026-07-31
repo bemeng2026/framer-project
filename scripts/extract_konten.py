@@ -41,6 +41,10 @@ SLUG = {
 # Semua 16 bidang wajib muncul; yang tidak muncul dianggap hilang dari sumber.
 WAJIB = set(SLUG.values())
 
+# Pasangan bidang yang deskripsinya memang sama persis dan sudah dikonfirmasi
+# benar, jadi tidak perlu dilaporkan sebagai salah tempel.
+KEMBAR_DISENGAJA = {("depor", "hr")}
+
 
 def kelompok(teks):
     """Pecah teks jadi kelompok baris yang dipisah baris kosong."""
@@ -122,13 +126,14 @@ def main():
     for slug in sorted(hilang):
         masalah.append(f"{slug}: tidak ada sama sekali di file sumber")
 
-    # Deskripsi yang sama persis antar bidang hampir pasti salah tempel.
+    # Deskripsi yang sama persis antar bidang biasanya salah tempel, kecuali
+    # pasangan yang sudah dicek dan dikonfirmasi memang begitu.
     lihat = {}
     for slug, d in hasil.items():
         if d["deskripsi"]:
             lihat.setdefault(d["deskripsi"], []).append(slug)
     for desk, slugs in lihat.items():
-        if len(slugs) > 1:
+        if len(slugs) > 1 and tuple(sorted(slugs)) not in KEMBAR_DISENGAJA:
             masalah.append(f"deskripsi identik di {sorted(slugs)}: {desk[:60]}…")
 
     print()

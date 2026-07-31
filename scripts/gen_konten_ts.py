@@ -33,11 +33,11 @@ KORIDOR = {
 LUBANG = {
     ("kestari", "deskripsi"): "deskripsi bidang tidak ada di file sumber",
     ("kastrat", "proker"): "daftar proker tidak ada di file sumber",
-    ("depor", "deskripsi"): (
-        "deskripsi di file sumber identik dengan Human Resources "
-        "(salah tempel) — perlu deskripsi asli Departemen Olahraga"
-    ),
 }
+
+# Deskripsi yang memang sama persis antar bidang dan sudah dikonfirmasi benar,
+# jadi pengecekan "deskripsi kembar" tidak perlu menggagalkannya lagi.
+KEMBAR_DISENGAJA = {("depor", "hr")}
 
 HEADER = '''/* ==========================================================================
    BidangKonten.ts — Deskripsi & program kerja tiap bidang
@@ -48,8 +48,11 @@ HEADER = '''/* =================================================================
    Pasangannya FungsionarisData.ts (nama orang, dari Excel). File ini teks;
    file itu orang.
 
-   Tiga bagian sengaja dibiarkan kosong karena memang tidak ada di sumber.
+   Dua bagian sengaja dibiarkan kosong karena memang tidak ada di sumber.
    Tidak ditebak — lihat komentar TODO di masing-masing tempat.
+
+   Deskripsi Depor sama persis dengan Human Resources. Itu sudah dicek dan
+   dikonfirmasi benar, bukan salah tempel.
    ========================================================================== */
 
 export type Proker = {

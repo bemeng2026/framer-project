@@ -7,8 +7,11 @@
    Pasangannya FungsionarisData.ts (nama orang, dari Excel). File ini teks;
    file itu orang.
 
-   Tiga bagian sengaja dibiarkan kosong karena memang tidak ada di sumber.
+   Dua bagian sengaja dibiarkan kosong karena memang tidak ada di sumber.
    Tidak ditebak — lihat komentar TODO di masing-masing tempat.
+
+   Deskripsi Depor sama persis dengan Human Resources. Itu sudah dicek dan
+   dikonfirmasi benar, bukan salah tempel.
    ========================================================================== */
 
 export type Proker = {
@@ -452,8 +455,8 @@ export const KONTEN: Record<string, Konten> = {
     depor: {
         slug: "depor",
         koridor: "Kresma",
-        // TODO: deskripsi di file sumber identik dengan Human Resources (salah tempel) — perlu deskripsi asli Departemen Olahraga
-        deskripsi: "",
+        deskripsi:
+            "Bidang yang bertujuan menjaga alur kaderisasi, menjaga internalisasi, dan mengevaluasi kinerja pengurus BEM FTUI 2025.",
         proker: [
             {
                 judul: "Latihan Rutin",
