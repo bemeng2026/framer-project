@@ -16,16 +16,42 @@ import unicodedata
 TINGKAT = ("pasti", "kemungkinan", "ragu", "tidak ada")
 
 
+# Kata yang muncul di nama file tapi bukan bagian dari nama orang. Sebagian
+# besar file memakai pola "Nama - Departemen - Angkatan - Jabatan", jadi tanpa
+# ini skor kecocokan jadi encer.
+DERAU = {
+    # penanda departemen
+    "departemen", "teknik", "elektro", "mesin", "kimia", "industri",
+    "metalurgi", "material", "sipil", "lingkungan", "perkapalan", "biomedik",
+    "komputer", "bioproses", "arsitektur", "interior", "program",
+    "internasional", "kki",
+    "dte", "dtm", "dtk", "dti", "dtmm", "dts", "dtsl", "da", "pi",
+    # penanda jabatan
+    "badan", "pengurus", "kepala", "wakil", "bidang", "staf", "staff", "ahli",
+    "bp", "bph", "sa", "koorbid", "koordinator",
+    # lain-lain
+    "salinan", "foto", "copy", "final", "fix", "edited", "raw", "ver",
+    "kesekretariatan", "research", "and", "development",
+}
+
+
 def bersih(teks):
-    """Buang ekstensi, awalan BP_/BPH_/SA_, aksen, dan tanda baca."""
-    teks = re.sub(r"\.(jpg|jpeg|png|heic|webp)$", "", teks, flags=re.I)
-    teks = re.sub(r"^(bp|bph|sa|foto)[\s_-]+", "", teks, flags=re.I)
+    """Buang ekstensi, aksen, dan tanda baca."""
+    teks = re.sub(r"\.(jpg|jpeg|png|heic|webp|cr2)$", "", teks, flags=re.I)
     teks = unicodedata.normalize("NFKD", teks).encode("ascii", "ignore").decode()
     return re.sub(r"[^a-z0-9 ]", " ", teks.lower())
 
 
-def kata(teks):
-    return [k for k in bersih(teks).split() if k]
+def kata(teks, buang_derau=True):
+    """Kata-kata bermakna dari sebuah nama. Angka (tahun) selalu dibuang."""
+    keluar = []
+    for k in bersih(teks).split():
+        if not k or k.isdigit():
+            continue
+        if buang_derau and k in DERAU:
+            continue
+        keluar.append(k)
+    return keluar
 
 
 def tanpa_nama(berkas):
