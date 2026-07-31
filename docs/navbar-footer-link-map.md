@@ -57,23 +57,73 @@ Halaman per-bidang yang masih berdiri sendiri (lihat §5 — perlu keputusan):
 <!-- TODO: isi submenu belum bisa dipastikan — teks item di komponen navbar
      tidak terbaca lewat MCP. Perlu dikonfirmasi dari desain navbar homepage. -->
 
-### Program (dropdown — 7 koridor)
+### Program (dropdown — 7 koridor, tiap koridor punya submenu bidang)
 
-| Item | Target |
-| --- | --- |
-| Internal | `/koridor-internal` |
-| Finance | `/koridor-finance` |
-| Kominfo | `/koridor-kominfo` |
-| Adkesma | `/koridor-adkesma` |
-| Sospol | `/koridor-sospol` |
-| Sosling | `/koridor-sosling` |
-| Kresma | `/koridor-kresma` |
+Urutan koridor mengikuti bagan struktur organisasi BEM FT UI 2026.
+
+Item koridor sendiri tetap bisa diklik ke halaman koridornya. Item bidang di
+bawahnya menuju halaman koridor yang **sama** lalu scroll ke section bidang —
+bukan halaman terpisah.
+
+| Koridor | Target koridor | Bidang | Target bidang |
+| --- | --- | --- | --- |
+| Internal | `/koridor-internal` | Kesekretariatan | `/koridor-internal#bidang-kestari` |
+| | | Human Resource | `/koridor-internal#bidang-hr` |
+| | | Research and Development | `/koridor-internal#bidang-rnd` |
+| Finance | `/koridor-finance` | Kebendaharaan | `/koridor-finance#bidang-kebendaharaan` |
+| | | Kewirausahaan | `/koridor-finance#bidang-wirus` |
+| Adkesma | `/koridor-adkesma` | Akademis dan Keprofesian | `/koridor-adkesma#bidang-akpro` |
+| | | Kesejahteraan Mahasiswa | `/koridor-adkesma#bidang-kesma` |
+| Kresma | `/koridor-kresma` | Riset dan Teknologi | `/koridor-kresma#bidang-ristek` |
+| | | Seni | `/koridor-kresma#bidang-seni` |
+| | | Olahraga | `/koridor-kresma#bidang-depor` |
+| Sospol | `/koridor-sospol` | Kemahasiswaan | `/koridor-sospol#bidang-kema` |
+| | | Kajian dan Aksi Strategis | `/koridor-sospol#bidang-kastrat` |
+| Sosling | `/koridor-sosling` | Sosial Masyarakat | `/koridor-sosling#bidang-sosmas` |
+| | | Lingkungan Hidup | `/koridor-sosling#bidang-lh` |
+| Kominfo | `/koridor-kominfo` | Media | `/koridor-kominfo#bidang-media` |
+| | | Relasi | `/koridor-kominfo#bidang-relasi` |
+
+Ketujuh halaman koridor **sudah ada** — tidak ada link koridor yang menggantung.
 
 ### Hubungi Kami
 
 | Item | Target |
 | --- | --- |
 | Hubungi Kami | `/hubungi-kami` |
+
+---
+
+## 2b. Link yang tujuannya belum ada — jangan hapus tombolnya
+
+Tombolnya tetap dipasang sesuai peta di atas. Yang belum ada adalah **section
+tujuan di dalam halaman koridornya**, jadi link mendarat di halaman yang benar
+tapi belum scroll ke mana-mana. Ini hilang sendiri begitu koridornya disusun.
+
+| Anchor | Status section tujuan |
+| --- | --- |
+| `#bidang-media`, `#bidang-relasi` | ✅ Ada — Kominfo sudah tersusun |
+| `#bidang-akpro`, `#bidang-kesma` | ⚠️ Section ada tapi belum lengkap (9 dari 10) |
+| 12 anchor bidang sisanya | ❌ Section belum dibuat |
+
+Halaman bidang yang masih berdiri sendiri — `/media`, `/media-2`, `/relasi`,
+`/hr`, `/rnd`, `/kestari`, `/bidang-template` — **tidak boleh** jadi target
+navbar. Semuanya harus mengarah ke anchor di halaman koridor. Setelah koridor
+tersusun, halaman-halaman ini perlu di-redirect (lihat §5 poin 2).
+
+## 2c. Cara memasang anchor tanpa kode
+
+Aturan Prompt 0 melarang code component. Untuk link navbar lintas-halaman
+seperti `/koridor-kresma#bidang-seni`, **tidak perlu kode sama sekali**:
+
+1. Pilih section bidang di canvas.
+2. Panel kanan → beri **Name** persis `bidang-<slug>` (mis. `bidang-seni`).
+   Framer menjadikan nama layer sebagai anchor id.
+3. Di navbar, isi field Link dengan path + `#bidang-<slug>`.
+
+`BidangAnchor.tsx` **tidak dipakai untuk ini** — override itu hanya relevan
+untuk klik-video-scroll di dalam satu halaman, dan itu pun melanggar aturan
+Prompt 0. Native-nya: Interactions → Click → Scroll To → pilih section.
 
 ---
 
