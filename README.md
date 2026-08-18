@@ -82,6 +82,16 @@ itself is what you need reviewed.
 | `src/App.tsx` | Panel: trigger, counts, copy/download. |
 | `framer.json` | Plugin id, name, and mode (`canvas`). |
 
+## Canvas components
+
+`framer/` holds code components that run on the Framer canvas, not inside this
+plugin. Paste one into Framer's code editor. Nothing in `src/` imports them and
+`tsconfig.json` only includes `src`, so they are not part of the plugin bundle.
+
+| Path | Role |
+| --- | --- |
+| `framer/InfoTicker.tsx` | A fixed prefix followed by a word that slides over on a timer, collapsing away on hover. |
+
 ## Checks
 
 ```bash
