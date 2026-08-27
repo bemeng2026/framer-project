@@ -1,0 +1,178 @@
+"""Parse deskripsi & program kerja tiap bidang dari file teks sumber.
+
+Keluaran dipakai untuk mengisi section bidang di Framer. Bidang yang datanya
+tidak lengkap TIDAK diisi tebakan — field-nya dibiarkan kosong dan dilaporkan,
+sesuai aturan induction: kalau sumbernya tidak ada, laporkan, jangan karang.
+"""
+
+import json
+import re
+import sys
+
+SRC = (
+    "/root/.claude/uploads/eb583584-69f0-54c1-afa1-8bcc9ca8dce1/"
+    "95f04176-pengertian_deskripsi_seluruh_bidang_dan_prokernya.txt"
+)
+OUT = (
+    "/tmp/claude-0/-home-user-framer-project/"
+    "eb583584-69f0-54c1-afa1-8bcc9ca8dce1/scratchpad/konten.json"
+)
+
+# Judul "Bidang ..." di file → slug. Ditulis lowercase untuk pencocokan.
+SLUG = {
+    "media": "media",
+    "relasi": "relasi",
+    "human resources": "hr",
+    "research & development": "rnd",
+    "kestari": "kestari",
+    "seni": "seni",
+    "depor": "depor",
+    "ristek": "ristek",
+    "sosmas": "sosmas",
+    "lingkungan hidup": "lh",
+    "kesma": "kesma",
+    "akpro": "akpro",
+    "kemahasiswaan": "kema",
+    "kastrat": "kastrat",
+    "kewirausahaan": "wirus",
+    "kebendaharaan": "kebendaharaan",
+}
+
+# Semua 16 bidang wajib muncul; yang tidak muncul dianggap hilang dari sumber.
+WAJIB = set(SLUG.values())
+
+# Pasangan bidang yang deskripsinya memang sama persis dan sudah dikonfirmasi
+# benar, jadi tidak perlu dilaporkan sebagai salah tempel.
+KEMBAR_DISENGAJA = {("depor", "hr")}
+
+# Koreksi teks sumber yang sudah dikonfirmasi ke pemilik project. Ditulis di
+# sini supaya perubahannya terlihat dan bisa ditelusuri, bukan diam-diam.
+# Deskripsi HR & Depor menyebut kepengurusan 2025, padahal ini 2026.
+KOREKSI = [
+    ("BEM FTUI 2025", "BEM FTUI 2026"),
+]
+
+# Kekosongan yang sudah dilaporkan dan diputuskan dibiarkan. Tetap dicetak
+# sebagai catatan, tapi tidak lagi membuat script gagal — supaya kegagalan
+# script tetap berarti "ada masalah baru".
+DITERIMA = {
+    ("kestari", "deskripsi"),
+    ("kastrat", "proker"),
+}
+
+
+def koreksi(teks):
+    for lama, baru in KOREKSI:
+        teks = teks.replace(lama, baru)
+    return teks
+
+
+def kelompok(teks):
+    """Pecah teks jadi kelompok baris yang dipisah baris kosong."""
+    out, buf = [], []
+    for baris in teks.splitlines():
+        if baris.strip():
+            buf.append(baris.strip())
+        elif buf:
+            out.append(buf)
+            buf = []
+    if buf:
+        out.append(buf)
+    return out
+
+
+def main():
+    teks = open(SRC, encoding="utf-8").read()
+    hasil = {}
+    koridor_kini = None
+    slug_kini = None
+    mode_proker = False
+
+    for grup in kelompok(teks):
+        kepala = grup[0]
+        rendah = kepala.lower()
+
+        if re.fullmatch(r"koridor\s+\w+", rendah):
+            koridor_kini = kepala.split(None, 1)[1].strip()
+            slug_kini, mode_proker = None, False
+            continue
+
+        if rendah.startswith("bidang ") and not rendah.startswith("bidang kajian"):
+            nama = kepala[len("Bidang "):].strip()
+            slug = SLUG.get(nama.lower())
+            if slug:
+                slug_kini, mode_proker = slug, False
+                hasil[slug] = {
+                    "slug": slug,
+                    "koridor": koridor_kini,
+                    "namaSumber": nama,
+                    "deskripsi": koreksi(" ".join(grup[1:]).strip()),
+                    "proker": [],
+                }
+                continue
+
+        if rendah.startswith("proker"):
+            mode_proker = True
+            sisa = grup[1:]
+            if sisa and slug_kini:  # judul proker pertama menempel di header
+                hasil[slug_kini]["proker"].append(
+                    {"judul": sisa[0], "penjelasan": koreksi(" ".join(sisa[1:]).strip())}
+                )
+            continue
+
+        if mode_proker and slug_kini:
+            hasil[slug_kini]["proker"].append(
+                {"judul": kepala, "penjelasan": koreksi(" ".join(grup[1:]).strip())}
+            )
+
+    with open(OUT, "w", encoding="utf-8") as f:
+        json.dump(hasil, f, ensure_ascii=False, indent=2)
+
+    print(f"{len(hasil)} bidang terbaca\n")
+    print(f"{'slug':<15} {'koridor':<10} {'deskripsi':>10} {'proker':>7}")
+    masalah = []
+    diterima = []
+    for slug in sorted(hasil):
+        d = hasil[slug]
+        pjg = len(d["deskripsi"])
+        print(
+            f"{slug:<15} {str(d['koridor'] or '-'):<10} "
+            f"{(str(pjg) + ' char') if pjg else 'KOSONG':>10} {len(d['proker']):>7}"
+        )
+        if not pjg:
+            pesan = f"{slug}: deskripsi kosong"
+            (diterima if (slug, "deskripsi") in DITERIMA else masalah).append(pesan)
+        if not d["proker"]:
+            pesan = f"{slug}: tidak ada proker"
+            (diterima if (slug, "proker") in DITERIMA else masalah).append(pesan)
+
+    hilang = WAJIB - set(hasil)
+    for slug in sorted(hilang):
+        masalah.append(f"{slug}: tidak ada sama sekali di file sumber")
+
+    # Deskripsi yang sama persis antar bidang biasanya salah tempel, kecuali
+    # pasangan yang sudah dicek dan dikonfirmasi memang begitu.
+    lihat = {}
+    for slug, d in hasil.items():
+        if d["deskripsi"]:
+            lihat.setdefault(d["deskripsi"], []).append(slug)
+    for desk, slugs in lihat.items():
+        if len(slugs) > 1 and tuple(sorted(slugs)) not in KEMBAR_DISENGAJA:
+            masalah.append(f"deskripsi identik di {sorted(slugs)}: {desk[:60]}…")
+
+    print()
+    if diterima:
+        print("KOSONG, SUDAH DIPUTUSKAN DIBIARKAN:")
+        for m in diterima:
+            print("  -", m)
+        print()
+    if masalah:
+        print("MASALAH BARU, PERLU DILENGKAPI DARI BIDANG TERKAIT:")
+        for m in masalah:
+            print("  -", m)
+        sys.exit(1)
+    print("tidak ada masalah baru")
+
+
+if __name__ == "__main__":
+    main()
